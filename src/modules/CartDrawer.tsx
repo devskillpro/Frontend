@@ -60,7 +60,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
 
   return (
     <div
-      className={`fixed top-0 right-0 w-[90%] sm:w-[400px] h-full bg-white shadow-lg z-[9999] transform transition-transform duration-300 ease-in-out flex flex-col ${isOpen ? "translate-x-0" : "translate-x-full"
+      className={`fixed top-0 right-0 w-[92%] sm:w-[500px] h-full bg-white shadow-lg z-[9999] transform transition-transform duration-300 ease-in-out flex flex-col ${isOpen ? "translate-x-0" : "translate-x-full"
         }`}
     >
       {/* Header */}

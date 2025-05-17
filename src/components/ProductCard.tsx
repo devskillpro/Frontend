@@ -1,24 +1,26 @@
-'use client'
-import { FaStar, FaShoppingCart } from 'react-icons/fa';
-import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { addToCart, toggleCart } from '@/redux/slices/cartSlice';
-import { useRouter } from 'next/navigation'; // add this line
-import AddToCartButton from '@/app/products/[id]/AddToCartButton';
+  'use client';
+  import { FaStar} from 'react-icons/fa';
+  import React, { useState, useEffect } from 'react';
+  import { useRouter } from 'next/navigation'; // add this line
+  import AddToCartButton from '@/components/AddToCartButton';
 
-
+interface Variant {
+  id: string;
+  label: string;
+  price: number;
+  originalPrice: number;
+  stock: number;
+}
 interface ProductProps {
-  name?: string;
-  id?: string; // <-- Add this line
-  price?: number;
-  originalPrice?: number;
-  image?: string;
-  rating?: number;
-  reviews?: number;
+  id: number;
+  name: string;
+  images: string[];
+  variants: Variant[];
+  rating: number;
+  reviews: number;
   isTrending?: boolean;
-  category?: string;
-
-  // Carousel settings
+  category: string;
+  description?: string;
   carousel?: boolean;
   products?: ProductProps[];
 }
@@ -26,7 +28,7 @@ interface ProductProps {
 const ProductCard = ({
   carousel = false,
   products = [],
-}: ProductProps) => {
+}: { carousel?: boolean; products: ProductProps[] }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [slidesPerView, setSlidesPerView] = useState(3);
 
@@ -35,12 +37,11 @@ const ProductCard = ({
     const updateSlidesPerView = () => {
       const width = window.innerWidth;
       if (width < 640) {
-        setSlidesPerView(1); // 1 card on small screens
+        setSlidesPerView(1);
       } else {
-        setSlidesPerView(3); // 3 cards on larger screens
+        setSlidesPerView(3);
       }
     };
-
     updateSlidesPerView();
     window.addEventListener('resize', updateSlidesPerView);
     return () => window.removeEventListener('resize', updateSlidesPerView);
@@ -64,11 +65,8 @@ const ProductCard = ({
     setCurrentIndex((prev) => (prev - 1 + products.length) % products.length);
   };
 
-  const dispatch = useDispatch();
-
-
-  if (products.length === 0) {
-    return null; // Handle empty products case
+  if (!products || products.length === 0) {
+    return null;
   }
 
   if (carousel) {
@@ -80,13 +78,13 @@ const ProductCard = ({
             onClick={prevSlide}
             className="bg-gradient-to-r from-[#D4AF37] to-[#b98c1d] hover:from-[#b98c1d] hover:to-[#D4AF37] text-white w-9 h-8 sm:w-12 sm:h-10 flex items-center justify-center rounded-xl shadow-lg transition-all cursor-pointer"
           >
-            &#10094; {/* Left arrow */}
+            &#10094;
           </button>
           <button
             onClick={nextSlide}
             className="bg-gradient-to-r from-[#D4AF37] to-[#b98c1d] hover:from-[#b98c1d] hover:to-[#D4AF37] text-white w-9 h-8 sm:w-12 sm:h-10 flex items-center justify-center rounded-xl shadow-lg transition-all cursor-pointer"
           >
-            &#10095; {/* Right arrow */}
+            &#10095;
           </button>
         </div>
 
@@ -97,30 +95,15 @@ const ProductCard = ({
             transform: `translateX(-${(100 / slidesPerView) * currentIndex}%)`,
           }}
         >
-          {products.map((product, index) => {
-            const discount = Math.round(
-              ((product.originalPrice! - product.price!) / product.originalPrice!) * 100
-            );
-
-            return (
-              <div
-                key={index}
-                className="w-full px-2"
-                style={{ flex: `0 0 ${100 / slidesPerView}%` }}
-              >
-                <SingleCard {...product} discount={discount} onAddToCart={() => {
-                  dispatch(addToCart({
-                    name: product.name!,
-                    price: product.price!,
-                    originalPrice: product.originalPrice!,
-                    image: product.image!,
-                    quantity: 1,
-                  }));
-                  dispatch(toggleCart()); // This opens the cart drawer
-                }} />
-              </div>
-            );
-          })}
+          {products.map((product) => (
+            <div
+              key={product.id}
+              className="w-full px-2"
+              style={{ flex: `0 0 ${100 / slidesPerView}%` }}
+            >
+              <SingleCard product={product} />
+            </div>
+          ))}
         </div>
       </div>
     );
@@ -129,108 +112,81 @@ const ProductCard = ({
   // Non-carousel (grid layout)
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {products.map((product, index) => {
-        const discount = Math.round(
-          ((product.originalPrice! - product.price!) / product.originalPrice!) * 100
-        );
-
-        return (
-          <SingleCard
-            key={index}
-            {...product}
-            discount={discount}
-            onAddToCart={() =>
-              addToCart({
-                name: product.name!,
-                price: product.price!,
-                originalPrice: product.originalPrice!,
-                image: product.image!,
-                quantity: 1,
-              })
-            }
-          />
-        );
-      })}
+      {products.map((product) => (
+        <SingleCard key={product.id} product={product} />
+      ))}
     </div>
   );
 };
 
-const SingleCard = ({
-  id,
-  name,
-  price,
-  originalPrice,
-  image,
-  rating,
-  reviews,
-  isTrending,
-  category,
-  discount,
-  // onAddToCart,
-}: any) => {
 
+const SingleCard = ({ product }: { product: ProductProps }) => {
   const router = useRouter();
 
+  // Use the first variant and first image for the card
+  const variant = product.variants[0];
+  const image = product.images[0];
+  const discount = Math.round(
+    ((variant.originalPrice - variant.price) / variant.originalPrice) * 100
+  );
+
   const handleCardClick = () => {
-    if (id) {
-      router.push(`/products/${id}`);
+    if (product.id) {
+      router.push(`/products/${product.id}`);
     }
   };
 
-
-  const product = {
-    id,
-    name,
-    price,
-    originalPrice,
-    image,
-    rating,
-    reviews,
-    isTrending,
-    category,
-  };
-
   return (
-    <div onClick={handleCardClick}
-      className="cursor-pointer bg-white rounded-xl shadow-md p-4 flex flex-col justify-between w-full max-w-sm transition hover:shadow-lg relative">
-      {isTrending && (
+    <div
+      onClick={handleCardClick}
+      className="cursor-pointer bg-white rounded-xl shadow-md p-2 sm:p-4 flex flex-col justify-between w-full sm:max-w-xs md:max-w-sm transition hover:shadow-lg relative"
+    >
+      {product.isTrending && (
         <span className="bg-black text-white text-xs px-2 py-1 rounded-full absolute mt-2 ml-2 z-10 flex items-center gap-1">
           <span>⚡</span> Trending
         </span>
       )}
 
-      <div className="relative w-full h-60 flex items-center justify-center mb-4 border-4 border-[#D4AF37] rounded-lg">
+      <div className="relative w-full h-50 sm:h-52 md:h-70 flex items-center justify-center mb-2 sm:mb-4 border-4 border-[#D4AF37] rounded-lg">
         <img
           src={image}
-          alt={name}
+          alt={product.name}
           className="object-contain h-full w-full rounded-lg"
         />
       </div>
 
-      <p className="text-xs text-gray-400 uppercase mb-1">{category}</p>
-      <h3 className="text-md font-semibold mb-1">{name}</h3>
+      <p className="text-xs text-gray-400 uppercase mb-1">{product.category}</p>
+      <h3 className="text-md font-semibold mb-1">{product.name}</h3>
 
       <div className="flex items-center gap-1 text-sm text-gray-600 mb-1">
         <FaStar className="text-yellow-400" />
-        <span>{rating?.toFixed(1)}</span>
-        <span className="text-gray-400">| {reviews?.toLocaleString()}</span>
+        <span>{product.rating?.toFixed(1)}</span>
+        <span className="text-gray-400">| {product.reviews?.toLocaleString()}</span>
       </div>
 
       <div className="flex items-center gap-2 mb-2">
-        <p className="text-lg font-bold text-black">₹{price}</p>
-        <p className="line-through text-gray-400 text-sm">₹{originalPrice}</p>
+        <p className="text-lg font-bold text-black">₹{variant.price}</p>
+        <p className="line-through text-gray-400 text-sm">₹{variant.originalPrice}</p>
         <p className="text-green-600 text-sm font-semibold">{discount}% off</p>
       </div>
 
-
+      {/* Use AddToCartButton here */}
       <div onClick={e => e.stopPropagation()}>
-        <AddToCartButton product={product} />
+        <AddToCartButton
+          product={{
+            id: variant.id,
+            name: `${product.name} (${variant.label})`,
+            price: variant.price,
+            originalPrice: variant.originalPrice,
+            image,
+            quantity: 1,
+            stock: variant.stock,
+          }}
+        />
       </div>
-
-
-
     </div>
   );
 };
+
 
 export default ProductCard;
