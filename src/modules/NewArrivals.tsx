@@ -9,7 +9,7 @@ const NewArrivalsProducts = () => {
   );
 
   // Take up to 8 newest products
-  const newArrivals = sortedProducts.slice(0, 3);
+  const newArrivals = sortedProducts.slice(0, 8);
 
   return (
     <section

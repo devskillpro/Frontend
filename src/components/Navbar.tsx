@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 import { FaShoppingCart, FaUser, FaSearch, FaBars, FaTimes } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import Image from "next/image";
+
 
 
 import TopBanner from "./TopBanner";
@@ -65,13 +67,16 @@ const Navbar = () => {
       </div>
 
       {/* Main Navbar */}
-      <nav className="bg-white shadow-md px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between relative">
+      <nav className="bg-white shadow-md px-2 sm:px-6 lg:px-8 py-2 flex items-center justify-between relative">
         {/* Logo */}
-        <Link
-          href="/"
-          className="text-2xl font-bold text-black tracking-wider"
-        >
-          AL <span className="text-[#D4AF37]">ZAMAN</span>
+        <Link href="/" className="relative w-[80px] h-[40px]">
+          <Image
+            src="/Logo.jpg" // Put your logo image in /public/logo.png
+            alt="Al Zaman Logo"
+            fill
+            className="object-contain"
+            priority
+          />
         </Link>
 
         {/* Desktop Links */}

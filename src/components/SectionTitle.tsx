@@ -13,7 +13,7 @@ interface SectionTitleProps {
     showSort,
   }: SectionTitleProps) => {
     return (
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between mt-5 mb-6 gap-4">
         <div>
           {subtitle && (
             <p className="text-sm text-gray-500 uppercase tracking-widest">

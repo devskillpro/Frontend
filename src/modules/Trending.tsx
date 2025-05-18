@@ -1,5 +1,8 @@
 'use client';
-import { useState } from 'react';
+
+import { useState, useEffect } from 'react';
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 import ProductCard from '@/components/ProductCard';
 import SectionTitle from '@/components/SectionTitle';
 import { featuredProducts } from '@/helpers/data';
@@ -17,8 +20,39 @@ const TrendingAttarSection = () => {
     page * PRODUCTS_PER_PAGE
   );
 
+  // Animation setup
+  const controls = useAnimation();
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.15,
+  });
+
+  useEffect(() => {
+    if (inView) {
+      controls.start("visible");
+    }
+  }, [controls, inView]);
+
+  const sectionVariants = {
+    hidden: { opacity: 0, y: 60 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 1.5,
+        ease: [0.16, 1, 0.3, 1],
+      },
+    },
+  };
+
   return (
-    <section className="px-6 py-10 bg-white relative mt-10">
+    <motion.section
+      ref={ref}
+      initial="hidden"
+      animate={controls}
+      variants={sectionVariants}
+      className="px-6 py-5 bg-white relative mt-2"
+    >
       <div className="flex justify-center">
         <SectionTitle
           title="Trending Attar"
@@ -33,7 +67,6 @@ const TrendingAttarSection = () => {
 
           {totalPages > 1 && (
             <div className="flex justify-center items-center mt-8 gap-2">
-              {/* Only show Previous if not on first page */}
               {page > 1 && (
                 <button
                   className="px-3 py-1 rounded bg-gray-200 hover:bg-[#D4AF37] hover:text-white font-semibold"
@@ -55,7 +88,6 @@ const TrendingAttarSection = () => {
                   {idx + 1}
                 </button>
               ))}
-              {/* Only show Next if not on last page */}
               {page < totalPages && (
                 <button
                   className="px-3 py-1 rounded bg-gray-200 hover:bg-[#D4AF37] hover:text-white font-semibold"
@@ -78,7 +110,7 @@ const TrendingAttarSection = () => {
           </p>
         </div>
       )}
-    </section>
+    </motion.section>
   );
 };
 
