@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@cloudflare/next-on-pages": "^1.13.12",
     "@reduxjs/toolkit": "^2.6.1",
     "autoprefixer": "^10.4.21",
     "framer-motion": "^12.12.1",
