@@ -179,6 +179,7 @@
 
 // export default ProductDetailPage;
 
+export const runtime = 'edge';
 
 import { featuredProducts } from '@/helpers/data';
 import ProductDetailClient from './ProductDetailClient';
