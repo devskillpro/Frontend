@@ -26,5 +26,8 @@
     "@types/react-dom": "^19",
     "tailwindcss": "^4.0.13",
     "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=18.18.0"
   }
 }
