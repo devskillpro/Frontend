@@ -1,67 +1,3 @@
-// 'use client';
-// import { FaHeart, FaFlask, FaLeaf } from 'react-icons/fa';
-// import { FaDiamond } from 'react-icons/fa6';
-// import { GiPerfumeBottle, GiDuration } from 'react-icons/gi';
-
-// const trustItems = [
-//   {
-//     icon: <FaDiamond size={28} />,
-//     title: 'Premium Quality',
-//   },
-//   {
-//     icon: <FaHeart size={28} />,
-//     title: 'Cruelty Free',
-//   },
-//   {
-//     icon: <GiDuration size={28} />,
-//     title: 'Long Lasting',
-//   },
-//   {
-//     icon: <GiPerfumeBottle size={28} />,
-//     title: 'Variety of Fragrances',
-//   },
-//   {
-//     icon: <FaFlask size={28} />,
-//     title: 'Dermat Tested',
-//   },
-//   {
-//     icon: <FaLeaf size={28} />,
-//     title: '100% Vegan',
-//   },
-// ];
-
-// const WhyTrustUs = () => {
-//   return (
-//     <section className="bg-[url('/BG.png')] bg-cover bg-center py-8 px-4 sm:px-4 text-white mt-10">
-//       <div className="max-w-6xl mx-auto text-center">
-//         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-10 sm:mb-12 text-[#D4AF37] drop-shadow-md">
-//           Why Trust Us?
-//         </h2>
-
-//         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 sm:gap-6">
-//           {trustItems.map((item, index) => (
-//             <div
-//               key={index}
-//               className="bg-[#1f1a17]/80 backdrop-blur-md rounded-xl sm:rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center shadow-lg hover:scale-105 transition-transform duration-300"
-//             >
-//               <div className="text-[#D4AF37] mb-2 sm:mb-3 text-lg sm:text-xl">
-//                 {item.icon}
-//               </div>
-//               <p className="text-xs sm:text-sm font-medium text-center leading-tight">
-//                 {item.title}
-//               </p>
-//             </div>
-//           ))}
-//         </div>
-//       </div>
-//     </section>
-//   );
-// };
-
-// export default WhyTrustUs;
-
-
-
 'use client';
 import { FaHeart, FaFlask, FaLeaf } from 'react-icons/fa';
 import { FaDiamond } from 'react-icons/fa6';
@@ -71,37 +7,19 @@ import { useInView } from 'react-intersection-observer';
 import { useEffect } from 'react';
 
 const trustItems = [
-  {
-    icon: <FaDiamond size={28} />,
-    title: 'Premium Quality',
-  },
-  {
-    icon: <FaHeart size={28} />,
-    title: 'Cruelty Free',
-  },
-  {
-    icon: <GiDuration size={28} />,
-    title: 'Long Lasting',
-  },
-  {
-    icon: <GiPerfumeBottle size={28} />,
-    title: 'Variety of Fragrances',
-  },
-  {
-    icon: <FaFlask size={28} />,
-    title: 'Dermat Tested',
-  },
-  {
-    icon: <FaLeaf size={28} />,
-    title: '100% Vegan',
-  },
+  { icon: <FaDiamond size={28} />, title: 'Premium Quality' },
+  { icon: <FaHeart size={28} />, title: 'Cruelty Free' },
+  { icon: <GiDuration size={28} />, title: 'Long Lasting' },
+  { icon: <GiPerfumeBottle size={28} />, title: 'Variety of Fragrances' },
+  { icon: <FaFlask size={28} />, title: 'Dermat Tested' },
+  { icon: <FaLeaf size={28} />, title: '100% Vegan' },
 ];
 
 const containerVariants = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.18, // delay between each card
+      staggerChildren: 0.18,
     },
   },
 };
@@ -140,16 +58,15 @@ const WhyTrustUs = () => {
           transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] },
         },
       }}
-      className="bg-[url('/BG.png')] bg-no-repeat bg-center bg-cover h-[200px] flex items-center justify-center px-4 text-white mt-5"
+      className="bg-black bg-no-repeat bg-center bg-cover py-12 px-4 sm:px-6 md:px-12 text-white mt-5"
     >
-      <div className="w-full text-center">
-        {/* Your content here, e.g.: */}
-        <h2 className="text-2xl sm:text-3xl font-bold text-[#D4AF37] drop-shadow-md mb-8">
+      <div className="max-w-7xl mx-auto text-center">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#D4AF37] drop-shadow-md mb-12">
           Why Trust Us?
         </h2>
 
         <motion.div
-          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 sm:gap-6"
+          className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 sm:gap-8"
           variants={containerVariants}
           initial="hidden"
           animate={controls}
@@ -158,13 +75,13 @@ const WhyTrustUs = () => {
             <motion.div
               key={index}
               variants={itemVariants}
-              className="bg-[#1f1a17]/80 backdrop-blur-md rounded-xl sm:rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center shadow-lg hover:scale-105 transition-transform duration-300"
+              className="bg-[#1f1a17]/80 backdrop-blur-md rounded-2xl p-4 flex flex-col items-center justify-center shadow-lg hover:scale-105 transition-transform duration-300"
               whileHover={{ scale: 1.08, boxShadow: '0 8px 32px #D4AF3766' }}
             >
-              <div className="text-[#D4AF37] mb-2 sm:mb-3 text-lg sm:text-xl">
+              <div className="text-[#D4AF37] mb-3 text-2xl sm:text-3xl">
                 {item.icon}
               </div>
-              <p className="text-xs sm:text-sm font-medium text-center leading-tight">
+              <p className="text-sm sm:text-base font-medium text-center leading-tight">
                 {item.title}
               </p>
             </motion.div>

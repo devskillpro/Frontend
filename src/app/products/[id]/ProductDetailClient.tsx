@@ -52,7 +52,7 @@ const ProductDetailClient = ({ product }: { product: Product }) => {
   );
 
   return (
-    <div className="mt-8 sm:mt-16">
+    <div className="mt-20 sm:mt-16">
       {/* Product Section */}
       <div className="bg-[#FAF6EF] py-6 sm:py-12">
         <div className="max-w-6xl mx-auto px-2 sm:px-4 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10">

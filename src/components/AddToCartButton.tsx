@@ -33,7 +33,7 @@ const AddToCartButton = ({ product }: AddToCartButtonProps) => {
     <button
       onClick={handleClick}
       disabled={isInCart || isOutOfStock}
-      className={`w-full mt-2 py-2 rounded-lg font-semibold flex items-center justify-center gap-2 transition-all duration-500 ease-in-out shadow-md ${
+      className={`w-full cursor-pointer mt-2 py-2 rounded-lg font-semibold flex items-center justify-center gap-2 transition-all duration-500 ease-in-out shadow-md ${
         isInCart || isOutOfStock
           ? 'bg-black text-white cursor-not-allowed shadow-lg'
           : 'bg-gradient-to-r from-[#D4AF37] to-[#b98c1d] hover:from-[#b98c1d] hover:to-[#D4AF37] text-white hover:shadow-lg'

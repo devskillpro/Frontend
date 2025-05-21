@@ -3,6 +3,7 @@ import { FaInstagram, FaFacebookF, FaWhatsapp, FaYoutube } from 'react-icons/fa'
 import { MdEmail } from 'react-icons/md'
 import { useEffect, useState } from 'react'
 import Button from './Button'
+import NewsletterSignup from './NewsletterSignup '
 
 const Footer = () => {
     const [showScrollTop, setShowScrollTop] = useState(false)
@@ -80,12 +81,7 @@ const Footer = () => {
 
                 {/* Newsletter */}
                 <div className="space-y-4 max-w-md">
-                    <h3 className="text-xl font-semibold text-white">Newsletter Signup</h3>
-                    <p className="text-gray-400">Subscribe to our newsletter</p>
-                    <div className="flex items-center w-full rounded-full overflow-hidden bg-white text-black">
-                        <input type="email" placeholder="Your email address" className="w-full px-4 py-2 outline-none text-sm" />
-                        <Button label="Subscribe" variant="primary" className="rounded-none rounded-r-full" />
-                    </div>
+                   <NewsletterSignup/>  
 
                     <div className="flex gap-2 pt-4">
                         <img src="/visa.svg" alt="Visa" className="h-6" />

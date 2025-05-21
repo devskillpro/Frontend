@@ -1,8 +1,8 @@
-  'use client';
-  import { FaStar} from 'react-icons/fa';
-  import React, { useState, useEffect } from 'react';
-  import { useRouter } from 'next/navigation'; // add this line
-  import AddToCartButton from '@/components/AddToCartButton';
+'use client';
+import { FaStar } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation'; // add this line
+import AddToCartButton from '@/components/AddToCartButton';
 
 interface Variant {
   id: string;
@@ -122,10 +122,13 @@ const ProductCard = ({
 
 const SingleCard = ({ product }: { product: ProductProps }) => {
   const router = useRouter();
+  const [isHovered, setIsHovered] = useState(false);
 
   // Use the first variant and first image for the card
   const variant = product.variants[0];
   const image = product.images[0];
+  const secondImage = product.images[1] || image; // fallback to first if no second image
+
   const discount = Math.round(
     ((variant.originalPrice - variant.price) / variant.originalPrice) * 100
   );
@@ -147,11 +150,24 @@ const SingleCard = ({ product }: { product: ProductProps }) => {
         </span>
       )}
 
-      <div className="relative w-full h-50 sm:h-52 md:h-70 flex items-center justify-center mb-2 sm:mb-4 border-4 border-[#D4AF37] rounded-lg">
+      <div
+        className="relative w-full h-50 sm:h-52 md:h-70 flex items-center justify-center mb-2 sm:mb-4 border-4 border-[#D4AF37] rounded-lg overflow-hidden"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        {/* First image (fades out on hover) */}
         <img
           src={image}
           alt={product.name}
-          className="object-contain h-full w-full rounded-lg"
+          className={`object-contain h-full w-full rounded-lg absolute inset-0 transition-opacity duration-700 ${isHovered ? "opacity-0" : "opacity-100"}`}
+          draggable={false}
+        />
+        {/* Second image (fades in on hover) */}
+        <img
+          src={secondImage}
+          alt={product.name}
+          className={`object-contain h-full w-full rounded-lg absolute inset-0 transition-opacity duration-700 ${isHovered ? "opacity-100" : "opacity-0"}`}
+          draggable={false}
         />
       </div>
 

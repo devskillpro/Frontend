@@ -134,7 +134,7 @@ export const featuredProducts = [
   {
     id: 2,
     name: "Oud-e-Rose Premium",
-    images: ["/6.jpg",],
+    images: ["/6.jpg", "/5.jpg"],
     variants: [
       { id: "2-30", label: "30ml", price: 499, originalPrice: 749, stock: 8 },
       { id: "2-50", label: "50ml", price: 749, originalPrice: 1049, stock: 2 },
@@ -150,7 +150,7 @@ export const featuredProducts = [
   {
     id: 3,
     name: "Shanaya Luxury Perfume",
-    images: ["/5.jpg"],
+    images: ["/5.jpg","/6.jpg"],
     variants: [
       { id: "3-50", label: "50ml", price: 399, originalPrice: 599, stock: 0 },
       { id: "3-100", label: "100ml", price: 699, originalPrice: 999, stock: 0 }, 

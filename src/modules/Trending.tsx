@@ -51,7 +51,7 @@ const TrendingAttarSection = () => {
       initial="hidden"
       animate={controls}
       variants={sectionVariants}
-      className="px-6 py-5 bg-white relative mt-2"
+      className="px-6 py-5  relative "
     >
       <div className="flex justify-center">
         <SectionTitle
